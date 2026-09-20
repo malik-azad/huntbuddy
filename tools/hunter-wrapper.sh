@@ -14,6 +14,14 @@ err(){ printf 'hunter: %s\n' "$*" >&2; exit 1; }
 
 open_count(){ pgrep -x opencode 2>/dev/null | wc -l | tr -d ' '; }
 
+ghost_count(){
+  # leftover hunter/opencode run wrappers still parked (from earlier blocked runs).
+  # Patterns are anchored to real binary paths so they never match our own shell.
+  local hb="${HB_HOME%/*}/.local/bin/hunter"
+  pgrep -af "${hb} run|\.local/bin/hunter run|\.opencode/bin/opencode run|timeout [0-9]* .*\.opencode/bin/opencode run" 2>/dev/null \
+    | grep -v 'pgrep' | wc -l | tr -d ' '
+}
+
 engage_card() {
   local a="$HB_HOME/engagements/.active" nm
   if [ -f "$a" ]; then
@@ -40,9 +48,32 @@ status() {
     pgrep -ax opencode 2>/dev/null | sed 's/^/  pid /' || true
   else
     printf '%s\n' "clear — no other opencode running; start hunting."
+    if [ "$(ghost_count)" -ge 1 ]; then
+      printf '\033[33mnote: leftover hunter/opencode 'run' processes are parked on this machine\n(they wait forever behind a held slot). Run 'hunter clear' to reap them.\033[0m\n'
+    fi
   fi
   relay="$(curl -m 8 -sS -o /dev/null -w '%{http_code}' https://opencode.ai/ 2>/dev/null || printf 'no-response')"
   printf 'relay : HTTP %s\n' "$relay"
+}
+
+clear_ghosts() {
+  printf '%s\n' "hunter clear: freeing the relay slot..."
+  printf '%s\n' " closes any other opencode instance and parked 'hunter run' / 'opencode run' leftovers."
+  if [ -t 0 ]; then
+    printf '%s' 'really close them all? [y/N] ' >&2
+    read -r ans
+    case "$ans" in y|Y|yes|YES) ;; *) echo "aborted."; exit 1 ;; esac
+  fi
+  pkill -9 -x opencode 2>/dev/null || true
+  pkill -9 -f '\.local/bin/hunter run' 2>/dev/null || true
+  pkill -9 -f '\.opencode/bin/opencode run' 2>/dev/null || true
+  sleep 1
+  local n; n="$(open_count)"
+  if [ "$n" -eq 0 ]; then
+    printf '%s\n' "done. relay is free (hunter status to confirm)."
+  else
+    printf '%s\n' "done — but ${n} opencode process still shows; run 'hunter status' to see which."
+  fi
 }
 
 preflight() {
@@ -97,7 +128,8 @@ Usage:
   hunter whoami                               who Hunter is (identity card)
   hunter engage <name> [target...]            open a new ISOLATED engagement world (state.json)
   hunter "<message>"                         run a one-off message   (e.g. hunter "what planes?")
-  hunter run "<message>"                      same, explicit; times out (default 240s) instead of hanging
+  hunter run ["--force"] "<message>"         one-off; fails fast if the slot is busy (or --force to wait)
+  hunter clear                               free the relay slot (close other opencode + parked runs)
   hunter auth                                 manage AI providers & login
   hunter models [provider]                    list available models
   hunter skills                               list loaded skill packs
@@ -137,16 +169,26 @@ case "${1:-}" in
     ;;
   run)
     shift
+    force=0
+    [ "${1:-}" = "--force" ] && { force=1; shift; }
+    if [ "$force" -eq 0 ] && [ "$(open_count)" -ge 1 ]; then
+      printf '%s\n' "hunter: another opencode conversation is holding the relay slot (one at a time)." >&2
+      printf '%s\n' "close it first — 'hunter clear' frees everything — or run: hunter run --force \"...\"" >&2
+      exit 1
+    fi
     cd "$HB_HOME"
     timeout "$RUN_TIMEOUT" "$OPENCODE_BIN" run "$@"
     rc=$?
     if [ "$rc" -eq 124 ]; then
       printf '%s\n' "hunter: timed out after ${RUN_TIMEOUT}s waiting for a relay token." >&2
       printf '%s\n' "The free relay serves one conversation at a time — run 'hunter status'," >&2
-      printf '%s\n' "close any other opencode instance, then try again." >&2
+      printf '%s\n' "check for BUSY/leftover processes, 'hunter clear' if needed, then try again." >&2
       exit 1
     fi
     exit "$rc"
+    ;;
+  clear)
+    clear_ghosts
     ;;
   auth|models|skills|debug|mcp|upgrade|uninstall|session|stats|export|import|serve|attach)
     cmd="$1"; shift
