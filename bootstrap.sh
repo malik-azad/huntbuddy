@@ -46,7 +46,8 @@ mkdir -p "$HB_BIN"
 ln -sfn "$HB_HOME/tools/hunter-wrapper.sh" "$HB_BIN/hunter"
 ok "hunter linked at $HB_BIN/hunter"
 
-# 4 · Sanity check -------------------------------------------------------------
+# 4 · Sanity check (use the engine we found/installed, not just PATH) -----------
+export HUNTBUDDY_OPENCODE="$OPENCODE_BIN"
 "$HB_BIN/hunter" --version >/dev/null
 ok "setup complete — run:   hunter"
 command -v opencode >/dev/null 2>&1 || \
