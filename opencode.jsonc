@@ -1,0 +1,58 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  // Huntbuddy brain: a permissive, free Zen model (no API keys, no per-minute
+  // quota like Gemini free). nemotron-3-ultra-free verified: runs
+  // scanning/recon without refusals. See config/free-models.md for rotation.
+  // Default brain: unlimited + no refusals. nemotron-3-ultra-free (Zen relay,
+  // no API keys) verified: executes authorized scanning/recon without
+  // refusals and without per-minute quotas. If you ever want faster but
+  // quota-capped responses, /models -> google/gemini-3.5-flash.
+  "model": "opencode/nemotron-3-ultra-free",
+  "small_model": "opencode/nemotron-3.5-lightning-free",
+  "default_agent": "hunter",
+  "share": "disabled",
+  "skills": {
+    "paths": [
+      "./skills",
+      "./playbooks/phases",
+      "./playbooks/playbooks",
+      "./playbooks/services",
+      "./playbooks/web"
+    ]
+  },
+  "instructions": ["./HUNTBUDDY.md"],
+  "permission": {
+    "bash": {
+      "rm -rf /": "deny",
+      "rm -rf /*": "deny",
+      "mkfs.*": "deny",
+      "dd if=* of=/dev/*": "deny"
+    }
+  },
+  "agent": {
+    "hunter": {
+      "description": "Huntbuddy lead agent — polite, mentor-style pentester that plans, enumerates, exploits carefully, verifies findings and writes reports.",
+      "prompt": "Your name is Hunter — the operator's agentic AI pentest buddy (brand: Huntbuddy). You run on the opencode engine, but you are NOT opencode, not a CLI tool, not a folder. When asked who you are, introduce yourself as Hunter with a short mentor-style intro; name your model or the engine only if explicitly asked. Preferred approach: mentor mode (explain before each tool, interpret output, always end with a concrete Next step), enumeration-first, and never mark a finding confirmed until the verify-proof routine has passed. Use the scanner, critic and reporter subagents when a task calls for them.",
+      "mode": "primary",
+      "color": "#e3b341"
+    },
+    "scanner": {
+      "description": "Runs network reconnaissance and enumeration (nmap, netexec, nuclei, dig, ffuf). Use to map hosts, ports, services and versions.",
+      "prompt": "You are the scanner subagent. Enumerate thoroughly but quietly: nmap service/version detection first, then targeted follow-ups. Return compact structured results: host, port, service, version, notes. Finish with a single summary message.",
+      "mode": "subagent",
+      "color": "#2e9e44"
+    },
+    "critic": {
+      "description": "Independent verifier. Re-tests suspected findings from an adversarial angle before they can be marked confirmed.",
+      "prompt": "You are the critic subagent (Huntbuddy's false-positive officer). For each suspected finding: reproduce it exactly, cross-check it with an independent angle, and run a benign control. Return verdicts confirmed / suspected / invalid with the exact evidence commands for each confirmed finding.",
+      "mode": "subagent",
+      "color": "#f85149"
+    },
+    "reporter": {
+      "description": "Writes the deliverable pentest report from verified findings.",
+      "prompt": "You are the reporter subagent. Produce the consult-reporting structure: executive summary, scope and methodology, verified findings with evidence + CVSS, remediation, appendix. Write the report to the engagement's findings.md in the engagements folder.",
+      "mode": "subagent",
+      "color": "#8957e5"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+# Sensitive/volatile files
+engagements/
+*.env
+*.log
+state.json
+findings.md
+agent-contexts.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Engine runtime storage (never commit credentials)
+auth.json
+# Legacy engine binary (not redistributed)
+bin/legacy/
+# Legacy engine config (kept local only)
+.pentestcode/
+# Plugin dependencies (auto-installed by the engine on first run)
+.opencode/node_modules/
+# Generated portable installers (rebuild with: bash dist/make-dist.sh)
+dist/huntbuddy-install.sh
+dist/huntbuddy-bundle.tar.xz

@@ -1,0 +1,7 @@
+
+> pentest · gemini-3.5-flash
+
+Thought: Verifying the availability of essential security tools to ensure the environment is fully equipped for the engagement.
+⚙ ensure_tools check: 21 tools
+Huntbuddy online.
+PentestCode: Initiate initial port scanning and service discovery on the target box using scanner to map open services and find exploitation entry points.

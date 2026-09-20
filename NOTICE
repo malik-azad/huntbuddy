@@ -1,0 +1,23 @@
+Huntbuddy includes substantial portions of third-party MIT-licensed software
+in binary and knowledge form. The MIT license requires this notice to be
+retained in all copies and substantial portions of the software. Do not remove
+it.
+
+1. OpenCode — the agent engine Huntbuddy runs on (runtime binary)
+   Copyright (c) 2026 Anomaly Co., and contributors
+   Repository: https://github.com/anomalyco/opencode
+   License: MIT
+
+2. PentestCode — AI penetration-testing fork of OpenCode from which
+   Huntbuddy ports its playbook knowledge and whose legacy engine binary
+   remains in `bin/legacy/`
+   Copyright (c) 2026 s0ld13rr (Zhangir Ospanov) and contributors
+   Repository: https://github.com/s0ld13rr/pentestcode
+   License: MIT
+
+3. Ported playbook skills (under `playbooks/`) — web/service/phase attack
+   playbooks imported from the PentestCode repository, MIT.
+   Section headers, descriptions and payloads retained largely unmodified
+   from their upstream sources.
+
+License texts: https://opensource.org/license/mit
