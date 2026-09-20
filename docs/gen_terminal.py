@@ -6,12 +6,14 @@ import os
 W, H = 1160, 820
 FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 LOGO = [
-    "  ██   ██ ██   ██ ███    ██ ████████ ██████   ██████  ██    ██ ██████  ██    ██",
-    "  ██   ██ ██   ██ ████   ██    ██    ██   ██ ██   ██ ██    ██ ██   ██ ██    ██",
-    "  ███████ ██   ██ ██ ██  ██    ██    ██   ██ ██   ██ ██    ██ ██   ██ ██   ██ ██    ██",
-    "  ██   ██ ██   ██ ██  ██ ██    ██    ██   ██ ██   ██ ██    ██ ██   ██ ██    ██",
-    "  ██   ██  █████  ██   ████    ██    ██████   ██████   ██████  ██████   ██████",
+    ("██   ██   ██    ██   ███    ██   ████████", "███████   ██████"),
+    ("██   ██   ██    ██   ████   ██      ██",   "██        ██   ██"),
+    ("███████   ██    ██   ██ ██  ██      ██",   "█████     ██████"),
+    ("██   ██   ██    ██   ██  ██ ██      ██",   "██        ██   ██"),
+    ("██   ██    ██████    ██   ████      ██",   "███████   ██   ██"),
 ]
+LOGO_G = (0, 255, 0)
+LOGO_W = (226, 227, 229)
 
 TRANS = [
     "  hunter » pentest 192.168.1.10, goal is root",
@@ -44,12 +46,14 @@ d.text((cx + 110, cy + 26), "kali@hunt — hunter", font=font(20), fill=(139, 14
 y = cy + 78
 d.line((cx + 26, y, W - cx - 26, y), fill=(45, 51, 59), width=1)
 y += 28
-d.text((cx + 40, y), LOGO[0], font=font(24), fill=(247, 201, 72)); y += 34
-d.text((cx + 40, y), LOGO[1], font=font(24), fill=(247, 201, 72)); y += 34
-d.text((cx + 40, y), LOGO[2], font=font(24), fill=(247, 201, 72)); y += 34
-d.text((cx + 40, y), LOGO[3], font=font(24), fill=(247, 201, 72)); y += 34
-d.text((cx + 40, y), LOGO[4], font=font(24), fill=(247, 201, 72)); y += 40
-d.text((cx + 40, y), "  AI pentest partner — recon to report · free OpenCode Zen brain",
+lf = font(24)
+PW = 46  # padded green width → white block starts at the same column on every row
+for g, w in LOGO:
+    d.text((cx + 40, y), g, font=lf, fill=LOGO_G)
+    d.text((cx + 40 + lf.getlength(" ") * PW, y), w, font=lf, fill=LOGO_W)
+    y += 34
+y += 6
+d.text((cx + 40, y), "AI pentest partner — recon to report · free OpenCode Zen brain",
        font=font(20), fill=(139, 148, 158)); y += 40
 
 for line in TRANS:
