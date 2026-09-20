@@ -14,11 +14,23 @@ err(){ printf 'hunter: %s\n' "$*" >&2; exit 1; }
 
 open_count(){ pgrep -x opencode 2>/dev/null | wc -l | tr -d ' '; }
 
+engage_card() {
+  local a="$HB_HOME/engagements/.active" nm
+  if [ -f "$a" ]; then
+    nm="$(cat "$a")"
+    printf 'engagement : %s\n' "$nm"
+    "$HB_HOME/tools/helpers/hb-state.sh" get "$nm" 2>/dev/null | sed 's/^/  /' || true
+  else
+    printf 'engagement : none active — open one: hunter engage <name> [target...]\n'
+  fi
+}
+
 status() {
   local n relay
   n="$(open_count)"
   printf 'engine : %s (%s)\n' "$OPENCODE_BIN" "$( "${OPENCODE_BIN}" --version 2>/dev/null || printf '?')"
   printf 'folder : %s\n' "$HB_HOME"
+  engage_card
   printf 'skills : %s packs\n' "$(find "$HB_HOME/skills" "$HB_HOME/playbooks" -name SKILL.md 2>/dev/null | wc -l | tr -d ' ')"
   printf 'active opencode processes: %s\n' "$n"
   if [ "$n" -ge 1 ]; then
@@ -81,8 +93,9 @@ Usage:
   hunter                                     start the interactive chat (TUI)
   hunter --help | -h | help                  this help
   hunter --version | -v                       engine version
-  hunter status                               check relay slot, opencode procs, skills
+  hunter status                               check relay slot, opencode procs, skills, active engagement
   hunter whoami                               who Hunter is (identity card)
+  hunter engage <name> [target...]            open a new ISOLATED engagement world (state.json)
   hunter "<message>"                         run a one-off message   (e.g. hunter "what planes?")
   hunter run "<message>"                      same, explicit; times out (default 240s) instead of hanging
   hunter auth                                 manage AI providers & login
@@ -117,6 +130,10 @@ case "${1:-}" in
     ;;
   whoami|identity)
     whoami_text
+    ;;
+  engage)
+    shift
+    exec "$HB_HOME/tools/helpers/hb-state.sh" new "$@"
     ;;
   run)
     shift

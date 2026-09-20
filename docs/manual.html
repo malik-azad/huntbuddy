@@ -109,9 +109,9 @@ expert playbooks are only pulled into context when a service or phase matches.</
  ├─ HUNTBUDDY.md      brand + operator rules loaded into every session
  ├─ skills/           9 authored methodology packs (mentor, oscp, cpent, research, ...)
  ├─ playbooks/        22 service/web/phase playbooks (SMB, AD, SQLi, SSRF, K8s, ...)
- ├─ tools/helpers/    hb-scope.sh · hb-report.sh · hb-engage.sh
+ ├─ tools/helpers/    hb-state.sh (state machine) · hb-scope.sh · hb-report.sh · hb-engage.sh
  ├─ config/           free-models.md (model rotation playbook)
- ├─ engagements/      one folder per engagement; findings.md lives here
+ ├─ engagements/      one ISOLATED world per engagement; state.json + findings.md + .hb-scope
  ├─ .opencode/        custom slash-commands (/guide /verify /learn)
  ├─ docs/             this manual · diagrams · samples
  ├─ start.sh · README.md · LICENSE · NOTICE · hunter (in ~/.local/bin)</pre></figure>

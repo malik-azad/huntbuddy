@@ -117,8 +117,9 @@ keeps a structured record in `engagements/<name>/` as you go.
 | `hunter` | Start the interactive chat (TUI), from any folder |
 | `hunter --help` / `-h` / `help` | Show the help screen |
 | `hunter --version` / `-v` | Engine version |
-| `hunter status` | Relay slot, running engine processes, skill count, health |
+| `hunter status` | Relay slot, running engine processes, skill count, active engagement |
 | `hunter whoami` | The identity card — who Hunter is |
+| `hunter engage <name> [target...]` | Open a new **isolated engagement world** |
 | `hunter "message"` | Run a one-off message |
 | `hunter run "message"` | Explicit one-off; bails out loudly after 240 s instead of hanging |
 | `hunter auth` | Manage providers / login (Google, OpenRouter, …) |
@@ -128,7 +129,26 @@ keeps a structured record in `engagements/<name>/` as you go.
 | `hunter session / stats / export / import / mcp / upgrade` | Engine utilities |
 
 In-chat commands: `/guide` (mentor mode), `/verify` (sweep suspect findings),
-`/learn <topic>` (teaching drill), `/report` (write the report).
+`/learn <topic>` (teaching drill), `/report` (write the report), `/scope`
+(show/create/switch engagement world), `/phase` (phase control),
+`/status` (engagement status card).
+
+## One engagement = one world (never mix)
+
+Every engagement is an **isolated world**: its own targets, scope, findings,
+credentials and notes — stored in `engagements/<name>/state.json` (+
+`findings.md` for evidence, `.hb-scope` for authorised targets). The active
+world is remembered in `engagements/.active`.
+
+- A clearly **different** target (another platform/programme, a separate THM
+  room or HTB box, a new client) automatically opens a **new, separate**
+  engagement — no findings/creds/notes bleed across worlds.
+- Cross-engagement reading happens **only when you explicitly ask**
+  (`/scope read <name>` / "use the creds from X") and is read-only.
+- Within one engagement, Hunter remembers everything and persists milestones to
+  `state.json`, so a resumed `hunter` session tomorrow continues the same world.
+- Scope is per-world: every target runs through
+  `tools/helpers/hb-scope.sh <target> <engagement>/.hb-scope` before anything.
 
 ## Agents
 
@@ -193,7 +213,9 @@ permissions, skill paths. Per-session brand and rules load from `HUNTBUDDY.md`.
 - **Hard stops in the engine config:** `rm -rf /`, `mkfs.*`, raw writes to
   block devices are denied.
 - **Scope guard helper** (`tools/helpers/hb-scope.sh`) keeps tool calls inside
-  the engagement's target list.
+  the engagement's per-world target list (`engagements/<name>/.hb-scope`).
+- **Isolation by design.** Each engagement world lives in its own folder with
+  its own state; targets and findings never mix across worlds.
 - **Sensitive data stays local:** credentials and engagement notes live under
   `engagements/`, which is git-ignored and never leaves the machine.
 
@@ -244,11 +266,11 @@ huntbuddy/
   HUNTBUDDY.md      brand & operator rules for every session
   skills/           9 authored methodology packs
   playbooks/        22 service/web/phase playbooks
-  tools/            hunter wrapper + helpers (scope guard, reports, scaffold)
+  tools/            hunter wrapper + state machine (hb-state.sh), scope guard, reports
   config/           model rotation notes
   docs/             PDF manual, diagrams, screenshot generator
   dist/             make-dist.sh builds the portable installer
-  engagements/      one folder per engagement (git-ignored)
+  engagements/      one isolated world per engagement; state.json + findings.md (git-ignored)
 ```
 
 ## Documentation
