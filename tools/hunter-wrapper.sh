@@ -36,6 +36,14 @@ status() {
 preflight() {
   if [ "$(open_count)" -ge 1 ]; then
     printf '\033[33mnote: another opencode instance is already running; the free relay serves one\nconversation at a time, so first replies may queue until it closes.\n(hunter status to see it)\033[0m\n'
+    if [ -t 0 ]; then
+      printf '%s' 'open anyway? [y/N] ' >&2
+      read -r ans
+      case "$ans" in
+        y|Y|yes|YES) ;;
+        *) printf 'exiting. close the other session first, then run hunter again (hunter status shows it).\n' >&2; exit 2 ;;
+      esac
+    fi
   fi
 }
 
@@ -92,6 +100,7 @@ USAGEEOF
 
 case "${1:-}" in
   "")
+    printf '\033]0;huntbuddy — hunter\007'
     preflight
     splash
     cd "$HB_HOME"
