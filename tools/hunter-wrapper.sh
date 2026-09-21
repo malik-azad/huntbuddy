@@ -18,8 +18,10 @@ ghost_count(){
   # leftover hunter/opencode run wrappers still parked (from earlier blocked runs).
   # Patterns are anchored to real binary paths so they never match our own shell.
   local hb="${HB_HOME%/*}/.local/bin/hunter"
-  pgrep -af "${hb} run|\.local/bin/hunter run|\.opencode/bin/opencode run|timeout [0-9]* .*\.opencode/bin/opencode run" 2>/dev/null \
-    | grep -v 'pgrep' | wc -l | tr -d ' '
+  # pgrep returns 1 when no matches; with pipefail this would kill the script.
+  # Use a subshell with || true to swallow the non-zero exit.
+  ( pgrep -af "${hb} run|\.local/bin/hunter run|\.opencode/bin/opencode run|timeout [0-9]* .*\.opencode/bin/opencode run" 2>/dev/null \
+    | grep -v 'pgrep' | wc -l | tr -d ' ' ) || echo 0
 }
 
 engage_card() {
