@@ -1,6 +1,6 @@
 ---
 name: web-xss
-description: Cross-Site Scripting detection→context-aware bypass→real-browser proof for web apps. Use when user input is reflected or stored into HTML/JS/attribute/URL/CSS contexts, when an input renders without encoding, or during VULN-ASSESSMENT on any app that echoes user data. Triggers - reflected input, search echo, stored comment/name/profile/avatar, <script>, alert(1), dalfox, cookie-steal, XSS, javascript:.
+description: Cross-Site Scripting detection→context-aware bypass→real-browser proof. Use when input is reflected/stored into HTML/JS/attr/URL/CSS, or during web vuln assessment. Triggers - XSS, reflected input, stored echo, alert, dalfox, cookie steal, javascript:.
 tags: [vuln_assess, exploitation]
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: privesc-linux
-description: Linux privilege-escalation checker—systematic, quiet, low-noise. Inspect user context, then SUID/SGID, sudo rights, capabilities, cron/scheduled tasks, world-writable scripts, shared libraries, kernel, PATH hijacking, and password reuse. Triggers - got a Linux shell as low-priv user, "privesc", "escalate on linux", UID != 0.
+description: Linux privesc checker - systematic, quiet. SUID/SGID, sudo rights, capabilities, cron, world-writable scripts/libs, kernel, PATH hijack, password reuse. Triggers - linux low-priv shell, privesc, escalate on linux.
 tags: [post_exploit, exploitation]
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: playbook-webapp
-description: Web application pentest methodology + ROUTER to the per-vuln-class web skills. Load at the START of systematic web testing to get the phase flow (recon → map → test-by-OWASP-class → prove → report) and pick which web-<class> skill to load for each surface. Use on any web app / HTTP API engagement.
+description: Web app pentest methodology + ROUTER to per-vuln-class skills. Load at START of systematic web testing to get phase flow (recon → map → test-by-OWASP-class → prove → report) and pick the matching skill. Triggers - web engagement, webapp, API testing, OWASP.
 tags: [vuln_assess, exploitation]
 ---
 
@@ -11,7 +11,10 @@ This is the ORDER of operations and the map to the deep skills. Each vuln CLASS 
 ## 1. Recon + active scan FIRST
 Fingerprint stack+version (whatweb/httpx, headers), CMS (wpscan/etc.), APIs (/swagger, /graphql, /.well-known). Then a content-matched `nuclei -u <t>` pass BEFORE exhaustive dir-fuzz (framework-runtime RCEs don't appear as routes) → `nuclei_parse`. Version + a known CVE → fetch & vet a public PoC (shared exploitation methodology).
 
-**Proxy auto-engage**: any web/HTTPS target → bring up Burp/mitmproxy (burp-mode skill) BEFORE driving the browser/curl, so real app traffic is captured. You don't ask; you start it. Reuse one proxy for the whole session. For API-only targets, still capture via proxy or export requests as curl/perl for evidence.
+**Proxy (lazy, not eager)**: quick stateless checks (curl/nuclei/ffuf) skip the proxy — no
+startup cost. Bring up mitmweb (default) when interception/evidence matters: interactive
+browser flows, login, forms, PoCs, request replay, screenshots. Use Burp GUI only when the
+user asks for Burp (`hb-proxy.sh start --burp`). Reuse one proxy for the whole session.
 
 ## 2. Map (hidden surface, AFTER the scan)
 `ffuf`/`gobuster` (→ `gobuster_parse`), vhosts (`ffuf -H Host:FUZZ`), params (`arjun`), auth endpoints (login/register/reset/OAuth), API routes. Review client-side JS for endpoints/secrets.

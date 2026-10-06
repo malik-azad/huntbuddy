@@ -1,6 +1,6 @@
 ---
 name: svc-mobile-android
-description: Android APK static analysis — OWASP Mobile Top 10, Retrofit API audit, transport security, smali reading, component export, auth flow analysis. Use when target is an APK/Android app. Triggers - APK, Android, mobile app, decompiled, smali, jadx, apktool.
+description: Android APK static analysis — OWASP Mobile Top 10, Retrofit API audit, transport security, smali reading, component export, auth flow.
 ---
 
 # Android APK Static Analysis — Full Methodology

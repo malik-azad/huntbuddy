@@ -1,6 +1,6 @@
 ---
 name: svc-smb
-description: SMB gotchas — DPAPI dump trap, relay when signing disabled, credential dump order. Use when SMB is found. Triggers - ports 445/139, signing:False, null session, EternalBlue MS17-010, PetitPotam.
+description: SMB gotchas — DPAPI dump trap, relay when signing disabled, credential dump order. Use when SMB is found. Triggers - ports 445/139.
 ---
 
 # SMB — Gotchas & Attack Chains

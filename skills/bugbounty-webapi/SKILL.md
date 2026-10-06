@@ -1,6 +1,6 @@
 ---
 name: bugbounty-web-api
-description: Bug-bounty hunting methodology for web apps and APIs—recon-on-steroids, attack surface mapping, common web API bug classes (IDOR, auth/authorization, injection, SSRF, file upload, JWT issues, business logic), impact-first triage, and report writing that programs accept. Triggers - web program, bug bounty, API testing, webapp target, IDOR hunt, JWT, OAuth, subdomain recon.
+description: Bug-bounty methodology for web apps/APIs - attack surface mapping, bug classes (IDOR, auth, injection, SSRF, upload, JWT, business logic), impact-first triage, accepted reports. Triggers - web program, bug bounty, API testing, IDOR, JWT.
 tags: [recon, engineering, webapp]
 ---
 

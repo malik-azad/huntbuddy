@@ -1,6 +1,6 @@
 ---
 name: svc-ftp
-description: FTP version exploits — vsftpd backdoor, ProFTPD mod_copy, writable upload→shell chain. Use when FTP is open. Triggers - port 21, vsftpd 2.3.4, ProFTPD mod_copy.
+description: FTP version exploits — vsftpd backdoor, ProFTPD mod_copy, writable upload→shell chain. Use when FTP is open. Triggers - port 21, vsftpd.
 ---
 
 # FTP — Version Exploits & Chains

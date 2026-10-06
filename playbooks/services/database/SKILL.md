@@ -1,6 +1,6 @@
 ---
 name: svc-database
-description: Database RCE paths — UDF, xp_cmdshell, COPY TO PROGRAM, Redis key write. Use when a database service is found. Triggers - MySQL 3306, PostgreSQL 5432, MSSQL 1433, Redis 6379, MongoDB 27017.
+description: Database RCE paths — UDF, xp_cmdshell, COPY TO PROGRAM, Redis key write. Use when a database service is found. Triggers - MySQL 3306.
 ---
 
 # Database — RCE & Escalation Paths

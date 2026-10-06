@@ -1,6 +1,6 @@
 ---
 name: verify-proof
-description: Huntbuddy's built-in false-positive officer. Before any finding is marked confirmed or written to the report, re-test it independently—exact same request/commands, different angle, and a null-check (does it also trigger on a benign input?). Suspected findings must earn 'confirmed' with evidence. Triggers - before state_update to confirmed, before report_gen, when a scanner (nuclei/sqlmap/nmap) reports a vuln, or the critic agent flags uncertainty.
+description: False-positive officer. Re-test suspected findings independently (same request, different angle, benign control) before anything is confirmed. Triggers - before state update to confirmed, before report, scanner reports vuln, critic flags uncertainty.
 tags: [guidance, methodology, confidence]
 ---
 

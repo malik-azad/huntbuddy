@@ -1,6 +1,6 @@
 ---
 name: privesc-windows
-description: Windows privilege-escalation checklist—WinPEAS-driven triage plus manual order: whoami context, service permissions (Unquoted Path/weak perms), scheduled tasks, AlwaysInstallElevated, UAC bypasses, auto-login creds, stored secrets, token impersonation (SeImpersonate potato family), and registry autoruns. Triggers - got a Windows shell or beacon as low-priv user, "privesc on windows", winpeas.
+description: Windows privesc checklist - WinPEAS triage: service perms (unquoted path/weak), scheduled tasks, AlwaysInstallElevated, UAC bypass, auto-login, stored secrets, potato tokens, registry autoruns. Triggers - windows low-priv, privesc windows.
 tags: [post_exploit, exploitation]
 ---
 

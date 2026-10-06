@@ -1,6 +1,6 @@
 ---
 name: consult-reporting
-description: Professional pentest report structure for Huntbuddy engagements—executive summary, methodology, verified findings with evidence + CVSS, reproduction, remediation, and traceability to evidence artifacts. Use at the REPORTING phase or when the user asks for a full report. Triggers - write report, /report, reporting phase, deliverable, executive summary.
+description: Professional pentest report structure - executive summary, methodology, verified findings with evidence + CVSS, reproduction, remediation. Use at REPORTING or when a full report is asked. Triggers - write report, /report, deliverable.
 tags: [reporting, methodology]
 ---
 

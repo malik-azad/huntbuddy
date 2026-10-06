@@ -1,6 +1,6 @@
 ---
 name: playbook-ad
-description: AD attack decision tree — which attacks need creds, delegation types, ADCS, key paths to DA. Load when a Windows domain / DC is found. Triggers - domain controller, Kerberos, LDAP, BloodHound, kerberoast, AS-REP, NTLM, ADCS ESC1-8.
+description: AD attack decision tree — which attacks need creds, delegation types, ADCS, key paths to DA. Load when a Windows domain / DC is found..
 ---
 
 # Active Directory — Decision Tree

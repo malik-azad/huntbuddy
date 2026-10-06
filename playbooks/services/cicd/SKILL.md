@@ -1,6 +1,6 @@
 ---
 name: svc-cicd
-description: CI/CD gotchas — default creds, instant-RCE paths, secret leaks in logs. Use when a CI/CD service is found. Triggers - Jenkins, GitLab, ArgoCD, Vault, pipeline, runner token.
+description: CI/CD gotchas — default creds, instant-RCE paths, secret leaks in logs. Use when a CI/CD service is found. Triggers - Jenkins, GitLab.
 ---
 
 # CI/CD — Gotchas & Quick Wins

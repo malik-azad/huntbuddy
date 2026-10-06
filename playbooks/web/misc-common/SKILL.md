@@ -1,6 +1,6 @@
 ---
 name: web-misc-common
-description: High-value web vuln classes WITHOUT dedicated deep packs — auto-load ANY web engagement to test + know under: CSRF, open redirect, CORS misconfig, host-header injection, HTTP request smuggling, cache poisoning, business-logic/race conditions, weak crypto (JWT/TLS/random), clickjacking, security-header gaps, mass-assignment, subdomain takeovers, HTTP verb tampering, GraphQL (introspection/IDOR/batching/mutations), WebSockets (authz/origin/channel). Triggers - any web target (router loads this alongside the class-specific skill), "check CSRF", "test redirect", "CORS", "host header", "smuggling", "cache", "race condition", "business logic", "JWT", "clickjacking", headers, takeover, graphql, /graphql, websocket, ws://, "what else to test".
+description: High-value web classes without deep packs - auto-load on ANY web engagement: CSRF, JWT/crypto, open redirect, CORS, host-header, request smuggling, cache poisoning, business-logic/race, mass-assignment, clickjacking, header gaps, subdomain takeover, HTTP verb, GraphQL, WebSockets. Triggers - CSRF, JWT, CORS, redirect, smuggling, graphql, websocket, race, business logic.
 tags: [vuln_assess, exploitation]
 ---
 

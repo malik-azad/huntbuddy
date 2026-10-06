@@ -1,6 +1,6 @@
 ---
 name: playbook-cloud
-description: Cloud IAM privesc paths and metadata endpoints per provider. Load when the target is cloud or you obtain cloud creds/metadata. Triggers - AWS/GCP/Azure, IAM, S3/blob, 169.254.169.254, access key.
+description: Cloud IAM privesc paths and metadata endpoints per provider. Load when the target is cloud or you obtain cloud creds/metadata. Triggers -.
 ---
 
 # Cloud — Privesc Paths & Metadata

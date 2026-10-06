@@ -1,6 +1,6 @@
 ---
 name: research
-description: Quick OSINT/intel-gathering on a target, website, URL, online link, document, or any text the user drops in. Parses the input itself, then runs fast targeted web searches for domain/tech/CVE/lab context, and outputs a compact intel brief (target type, tech stack, keys to attack, lab objective). Triggers - "research this", "what do you know about <target>", "look up this link/site/text", "find lab info", "extract intel", "brief me on". Use ONLY when the user asks to research/investigate an input; do NOT auto-run on every engagement.
+description: Quick OSINT/intel on a target, site, URL, document, or dropped text. Parses input, runs fast web searches for tech/CVE/lab context, outputs a compact intel brief. Triggers - research this, look up this link, find lab info, brief me. NOT auto-run.
 tags: [recon, osint, intel, websearch]
 ---
 

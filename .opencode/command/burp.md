@@ -1,10 +1,11 @@
 ---
 description: Interception proxy (burp-mode) — status, start, capture, PoC. Usage: /burp [status|start|stop|capture|poc FILE] or /burp with no args shows proxy status.
 ---
-Run the burp-mode intercept workflow. The proxy engine is chosen automatically: Burp Suite GUI when installed, else mitmproxy/mitmweb on the same port (127.0.0.1:8080).
+Run the burp-mode intercept workflow. Default engine is mitmweb (fast, headless, port 127.0.0.1:8080, web UI :8081); Burp Suite GUI is used only when explicitly requested via `/burp start burp`.
 
 - `/burp` — proxy status (hb-proxy.sh status).
-- `/burp start` — start Burp GUI or mitmweb, tell the user the port + GUI URL and how to point the browser at it.
+- `/burp start` — start mitmweb (fast default) on :8080; tell the user the port + GUI URL.
+- `/burp start burp` — launch the installed Burp Suite GUI (Community/Pro) for manual interception, replay, and screenshotting the Repeater window.
 - `/burp capture <target-url> <name>` — start a capture session: start proxy, drive Playwright through it, save the recorded flow into the engagement evidence folder (engagements/<active>/evidence/flows).
 - `/burp poc <request-file>` — turn a saved raw request into a curl PoC + python PoC + summary and show it.
 - `/burp shot <url> <name>` — full-page screenshot via Playwright through the proxy into the engagement evidence shots folder.

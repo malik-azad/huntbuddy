@@ -1,6 +1,6 @@
 ---
 name: web-ssti
-description: Server-Side Template Injection detection→engine-fingerprint→RCE for web apps. Use when user input renders into a server-side template (names, greetings, email/PDF/report generators, error pages, profile fields) and math payloads evaluate. Triggers - {{7*7}} returns 49, ${7*7}, #{7*7}, Jinja2/Twig/Freemarker/Velocity/ERB/Handlebars, TemplateSyntaxError, freemarker.core.
+description: Server-Side Template Injection detection→engine-fingerprint→RCE. Use when user input renders into a server template and math payloads evaluate. Triggers - {{7*7}} returns 49, ${7*7}, template injection, names/greetings/PDF render.
 tags: [vuln_assess, exploitation]
 ---
 

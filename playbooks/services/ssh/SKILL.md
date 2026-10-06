@@ -1,6 +1,6 @@
 ---
 name: svc-ssh
-description: SSH version CVEs and post-auth tricks — regreSSHion, user enum, agent hijack. Use when SSH is open. Triggers - port 22, OpenSSH banner, regreSSHion CVE-2024-6387, CVE-2018-15473.
+description: SSH version CVEs and post-auth tricks — regreSSHion, user enum, agent hijack. Use when SSH is open. Triggers - port 22, OpenSSH banner.
 ---
 
 # SSH — Version CVEs & Tricks

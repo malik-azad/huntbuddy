@@ -1,6 +1,6 @@
 ---
 name: playwright
-description: Browser automation primitive using Playwright. Launches a visible Chromium you control, runs approved scripts for navigation, extraction, form submission, and screenshots. No credential storage — you log in manually once per session.
+description: Browser automation via visible Chromium. Navigation, extraction, form submission, screenshots. No credential storage - manual login. Triggers - open browser, screenshot, fill form, login, automate, xss proof in browser.
 tags: [automation, browser, recon, lab]
 ---
 

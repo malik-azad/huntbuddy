@@ -1,6 +1,6 @@
 ---
 name: lab-parser
-description: Parses any lab/task/challenge text into structured objectives, questions, flags, and a step-by-step plan. Uses research skill for context lookup. Teaches the mentality behind each step when asked.
+description: Parses lab/CTF/task text into structured objectives, questions, flags, and a step-by-step plan. Uses research for context. Teaches the mentality of each step. Triggers - parse this lab, /lab, teach me, CTF text, task description.
 tags: [guidance, methodology, lab, ctf, teaching]
 ---
 

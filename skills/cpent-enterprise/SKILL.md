@@ -1,6 +1,6 @@
 ---
 name: cpent-enterprise
-description: CPENT/EC-Council enterprise engagement playbook—big-picture network pentesting: scope discovery, network aggregation and graphing, internal routing/pivoting, standard-operating-environment attacks, AV/EDR-aware execution, credential harvesting, wireless/IoT, and report-grade evidence chains. Triggers - enterprise network engagement, CPENT, multiple segments, pivot needed, "network pentest", discover all hosts, standard operating environment.
+description: CPENT/enterprise engagement - scope discovery, network aggregation/graphing, pivoting, SOE attacks, AV/EDR-aware execution, credential harvesting, wireless/IoT, evidence chains. Triggers - enterprise engagement, CPENT, multiple segments, pivot.
 tags: [methodology, engineering, infrastructure]
 ---
 

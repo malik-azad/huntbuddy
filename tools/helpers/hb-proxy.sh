@@ -12,7 +12,7 @@ BURP_PATHS=( "/opt/BurpSuitePro/burpsuite" "/opt/BurpSuiteCommunity/burpsuite"
 usage() { cat <<'EOF'
 usage: hb-proxy.sh <cmd> [args]
   detect              show which proxy engine is available
-  start               start the proxy (Burp GUI or mitmweb) on :8080
+  start [--burp]      start the proxy on :8080 (default mitmweb; --burp for Burp GUI)
   stop                stop mitmweb/mitmdump/curl-down the tunneled proxy
   status              is something listening on :8080?
   poc <req-file>      turn a raw HTTP request file into curl + python PoC + summary
@@ -38,6 +38,26 @@ detect() {
 listening() { ss -tln 2>/dev/null | awk '{print $4}' | grep -q ":$1$"; }
 
 start() {
+  local use_burp=""
+  [ "${1:-}" = "--burp" ] && use_burp=1
+
+  # Default engine: mitmweb (fast, lightweight, headless). Burp only when explicitly requested.
+  if [ -z "$use_burp" ]; then
+    if command -v mitmweb >/dev/null 2>&1; then
+      if listening "$PORT"; then
+        echo "mitmweb already up on :$PORT (web UI http://127.0.0.1:$WEBPORT)"
+      else
+        mkdir -p "$HOME/.huntbuddy/evidence"
+        nohup mitmweb --listen-port "$PORT" --web-port "$WEBPORT" \
+          --set web_open_browser=false >/dev/null 2>&1 &
+        echo "started mitmweb pid $! — proxy 127.0.0.1:$PORT, web GUI http://127.0.0.1:$WEBPORT"
+        echo "browser/proxy hint: set proxy 127.0.0.1:$PORT to capture."
+      fi
+      return
+    fi
+  fi
+
+  # Explicit Burp request (or mitmweb unavailable) → use the installed Burp GUI.
   local engine=""
   for b in "${BURP_PATHS[@]}"; do [ -f "$b" ] && engine="$b" && break; done
   [ -z "$engine" ] && command -v burpsuite >/dev/null 2>&1 && engine="$(command -v burpsuite)"
@@ -67,13 +87,23 @@ start() {
 }
 
 stop() {
-  for p in mitmweb mitmdump; do pkill -x "$p" 2>/dev/null || true; done
-  echo "stopped mitm proxy (if running). Burp GUI you close manually."
+  # detect what holds the port before stopping, so we don't say "mitmweb stopped" for Burp
+  local owner=""
+  if listening "$PORT" && [ -n "$(command -v ss)" ]; then
+    owner="$(ss -tlnp 2>/dev/null | grep ":$PORT " | grep -oE 'users:\(\("([^"]+)"' | head -1 | sed 's/users:(("//')"
+  fi
+  case "$owner" in
+    java*) pkill -f -x 'burpsuite|burpsuitepro' 2>/dev/null || pkill -f 'burpsuite' 2>/dev/null || true; echo "stopped Burp GUI." ;;
+    mitm*) ( pkill -x mitmweb 2>/dev/null; pkill -x mitmdump 2>/dev/null ) || true; echo "stopped mitm proxy." ;;
+    *) ( pkill -x mitmweb 2>/dev/null; pkill -x mitmdump 2>/dev/null ) || true; echo "stopped mitm proxy (if running). Burp GUI you close manually." ;;
+  esac
 }
 
 status() {
   if listening "$PORT"; then
-    echo "PROXY UP on 127.0.0.1:$PORT"
+    local owner=""
+    [ -n "$(command -v ss)" ] && owner="$(ss -tlnp 2>/dev/null | grep ":$PORT " | grep -oE 'users:\(\("([^"]+)"' | head -1 | sed 's/users:(("//')"
+    echo "PROXY UP on 127.0.0.1:$PORT (engine: ${owner:-unknown})"
     ss -tlnp 2>/dev/null | grep ":$PORT " | head -2 || true
   else
     echo "proxy DOWN on 127.0.0.1:$PORT (run 'hb-proxy.sh start')"

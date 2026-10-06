@@ -1,6 +1,6 @@
 ---
 name: web-cmd-injection
-description: Command Injection detection→RCE→proof for web apps. Use when a param/header/JSON field feeds a shell (ping, traceroute, convert, archive, lookup, download, filename save), when input echoes into a command output, or during VULN-ASSESSMENT on any endpoint that runs OS commands. Triggers - ping param, traceroute, whois, "no such file", ;id, $(id), $(), backticks, common-forms API, download/convert endpoint.
+description: Command Injection detection→RCE→proof. Use when a param/header/JSON field feeds a shell (ping, traceroute, convert, archive, download, filename) or output leaks command result. Triggers - ;id, $(id), backticks, command injection, ping param, RCE in web.
 tags: [vuln_assess, exploitation]
 ---
 

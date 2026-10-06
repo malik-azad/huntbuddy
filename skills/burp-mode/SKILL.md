@@ -1,6 +1,6 @@
 ---
 name: burp-mode
-description: Human-style web interception workflow for web-app pentesting, bug bounty, CTFs and labs. Uses Burp Suite (Community/Professional) when installed, or mitmproxy as the drop-in GUI-proxy equivalent. Captures, modifies and replays requests; generates reproducable PoCs (curl/python) and screenshots. AUTO-ENGAGES during any web-app/API testing on an authorized web target (engagements with platform/hosts) — start the proxy, capture real traffic as the browser/client runs, and use those real requests for all testing. Triggers - web target engagement, capture a request, intercept, slice, modify request, replay, PoC, proof of concept, proxy on, burp, mitm, manual web testing, reproduce this finding, make a screenshot.
+description: Web interception workflow for web testing/bug bounty/CTFs. Uses Burp Suite (Community/Pro) or mitmproxy. Capture, modify, replay requests; PoC + screenshots. Triggers - burp, mitm, intercept, capture request, modify request, replay, PoC, proxy.
 tags: [web, interception, proxy, burp, mitmproxy, poc, evidence]
 ---
 
@@ -10,11 +10,16 @@ Think like a manual web tester with a proxy in hand: **capture everything, modif
 selectively, replay precisely, prove with evidence.** No guesswork — every finding's
 steps can be rerun by a human.
 
-> **Auto-engage rule**: when an engagement/scan has a web or HTTPS target in scope,
-> start the proxy automatically before driving the browser/curl so real application
-> traffic lands in Burp/mitmweb. You do not wait for the user to type a proxy command —
-> you make it happen as part of normal web testing. Keep it lightweight (one engine, one
-> capture) and reuse the same running proxy across the session.
+> **Lazy auto-engage rule**: when an engagement/scan has a web or HTTPS target in scope,
+> keep the proxy OFF for quick stateless checks (single curl/nuclei pass) — spinning it up
+> every time adds latency. Start the proxy (mitmweb by default) only when actual
+> interception/evidence matters: interactive browser flows, login sequences, form
+> submissions, XSS/CSRF PoCs, request modifications, screenshots. Then reuse the same
+> running proxy for the rest of the session. To capture in the **Burp GUI** instead, launch
+> with `hb-proxy.sh start --burp` (or `/burp start burp`) — Burp stays a first-class option,
+> it just is not the auto-default. Burp must be running for Hunter to reference its traffic
+> or screenshots, so when the user asks for Burp specifically, start it and use it (replay,
+> compare responses, screenshot the Repeater window) — visible GUI is fine when explicitly wanted.
 
 ## Proxy engine selection (automatic)
 
