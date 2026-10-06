@@ -151,12 +151,15 @@ if os.path.isfile(base):
 ev = os.path.expanduser(f"~/huntbuddy/engagements/{act}/evidence/shots" if act else "~/.huntbuddy/evidence/shots")
 os.makedirs(ev, exist_ok=True)
 out = os.path.join(ev, f"{name}.png")
+chrome = next((c for c in ("/usr/bin/chromium","/usr/bin/chromium-browser","/usr/bin/google-chrome") if os.path.exists(c)), None)
 try:
     from playwright.sync_api import sync_playwright
+    if chrome is None:
+        print("no chromium found — install one (privileged apt) or pip playwright + chromium"); sys.exit(2)
 except Exception as e:
-    print("playwright not installed — run: npm i -g playwright && npx playwright install chromium"); sys.exit(2)
+    print("playwright not installed — pip3 install --user --break-system-packages playwright"); sys.exit(2)
 with sync_playwright() as p:
-    b = p.chromium.launch()
+    b = p.chromium.launch(executable_path=chrome, args=["--no-sandbox"])
     ctx = b.new_context(proxy={"server": f"http://127.0.0.1:{port}"}, ignore_https_errors=True)
     pg = ctx.new_page()
     pg.goto(url, wait_until="load", timeout=30000)

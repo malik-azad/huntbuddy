@@ -8,10 +8,10 @@ tags: [automation, browser, recon, lab]
 
 This skill gives you a **visible, user-controlled browser** for any web task. It does NOT store credentials, cookies, or sessions. You log in manually in the opened window; then Hunter can run scripts you approve.
 
-## Prerequisites (auto-installed on first use)
-- Node.js + npm
-- Playwright (`npm i -g playwright`)
-- Chromium (`npx playwright install chromium`)
+## Prerequisites (already satisfied on this Kali)
+- Python Playwright: `pip3 install --user --break-system-packages playwright` (self-contained, includes driver, no sudo)
+- Chromium browser: use the system binary at `/usr/bin/chromium` via `executable_path=` — no browser download
+- Verify: `tools/helpers/hb-playwright.sh` → "Playwright: OK (python) · Chromium: /usr/bin/chromium"
 
 ## Core Functions (call via Python/Playwright)
 
@@ -19,7 +19,7 @@ This skill gives you a **visible, user-controlled browser** for any web task. It
 from playwright.sync_api import sync_playwright
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(headless=False, args=["--start-maximized"])
+    browser = p.chromium.launch(headless=False, executable_path="/usr/bin/chromium", args=["--no-sandbox"])
     page = browser.new_page()
 
     # Navigation
