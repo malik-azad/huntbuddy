@@ -6,7 +6,8 @@ set -euo pipefail
 PORT=8080
 WEBPORT=8081
 BURP_PATHS=( "/opt/BurpSuitePro/burpsuite" "/opt/BurpSuiteCommunity/burpsuite"
-  "$HOME/BurpSuitePro/burpsuite" "$HOME/BurpSuiteCommunity/burpsuite" )
+  "$HOME/BurpSuitePro/burpsuite" "$HOME/BurpSuiteCommunity/burpsuite"
+  "$HOME/Downloads/Burpsuite-Professional/burpsuitepro" )
 
 usage() { cat <<'EOF'
 usage: hb-proxy.sh <cmd> [args]
@@ -22,9 +23,12 @@ EOF
 }
 
 detect() {
+  local found=0
   for b in "${BURP_PATHS[@]}"; do
-    if [ -f "$b" ]; then echo "burp-gui: $b"; break; fi
+    if [ -f "$b" ]; then echo "burp-gui: $b"; found=1; break; fi
   done
+  if [ "$found" = 0 ]; then command -v burpsuite >/dev/null 2>&1 && echo "burp-gui: $(command -v burpsuite)"; fi
+  command -v burpsuitepro >/dev/null 2>&1 && echo "burp-pro: $(command -v burpsuitepro)"
   command -v mitmweb >/dev/null 2>&1 && echo "mitmweb: $(command -v mitmweb)"
   command -v mitmproxy >/dev/null 2>&1 && echo "mitmproxy: $(command -v mitmproxy)"
   command -v java >/dev/null 2>&1 && echo "java: $(command -v java)"
@@ -36,6 +40,7 @@ listening() { ss -tln 2>/dev/null | awk '{print $4}' | grep -q ":$1$"; }
 start() {
   local engine=""
   for b in "${BURP_PATHS[@]}"; do [ -f "$b" ] && engine="$b" && break; done
+  [ -z "$engine" ] && command -v burpsuite >/dev/null 2>&1 && engine="$(command -v burpsuite)"
   if [ -n "$engine" ]; then
     if listening "$PORT"; then
       echo "proxy already listening on :$PORT — in Burp set intercept as needed."

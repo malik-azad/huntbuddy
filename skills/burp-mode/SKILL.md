@@ -1,6 +1,6 @@
 ---
 name: burp-mode
-description: Human-style web interception workflow for web-app pentesting, bug bounty, CTFs and labs. Uses Burp Suite (Community/Professional) when installed, or mitmproxy as the drop-in GUI-proxy equivalent. Captures, modifies and replays requests; generates reproducable PoCs (curl/python) and screenshots. Triggers - "capture a request", "intercept", "slice", "modify request", "replay", "PoC", "proof of concept", "proxy on", "burp", "mitm", "manual web testing", "reproduce this finding", "make a screenshot".
+description: Human-style web interception workflow for web-app pentesting, bug bounty, CTFs and labs. Uses Burp Suite (Community/Professional) when installed, or mitmproxy as the drop-in GUI-proxy equivalent. Captures, modifies and replays requests; generates reproducable PoCs (curl/python) and screenshots. AUTO-ENGAGES during any web-app/API testing on an authorized web target (engagements with platform/hosts) — start the proxy, capture real traffic as the browser/client runs, and use those real requests for all testing. Triggers - web target engagement, capture a request, intercept, slice, modify request, replay, PoC, proof of concept, proxy on, burp, mitm, manual web testing, reproduce this finding, make a screenshot.
 tags: [web, interception, proxy, burp, mitmproxy, poc, evidence]
 ---
 
@@ -9,6 +9,12 @@ tags: [web, interception, proxy, burp, mitmproxy, poc, evidence]
 Think like a manual web tester with a proxy in hand: **capture everything, modify
 selectively, replay precisely, prove with evidence.** No guesswork — every finding's
 steps can be rerun by a human.
+
+> **Auto-engage rule**: when an engagement/scan has a web or HTTPS target in scope,
+> start the proxy automatically before driving the browser/curl so real application
+> traffic lands in Burp/mitmweb. You do not wait for the user to type a proxy command —
+> you make it happen as part of normal web testing. Keep it lightweight (one engine, one
+> capture) and reuse the same running proxy across the session.
 
 ## Proxy engine selection (automatic)
 

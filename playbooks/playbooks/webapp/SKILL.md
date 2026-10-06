@@ -11,6 +11,8 @@ This is the ORDER of operations and the map to the deep skills. Each vuln CLASS 
 ## 1. Recon + active scan FIRST
 Fingerprint stack+version (whatweb/httpx, headers), CMS (wpscan/etc.), APIs (/swagger, /graphql, /.well-known). Then a content-matched `nuclei -u <t>` pass BEFORE exhaustive dir-fuzz (framework-runtime RCEs don't appear as routes) → `nuclei_parse`. Version + a known CVE → fetch & vet a public PoC (shared exploitation methodology).
 
+**Proxy auto-engage**: any web/HTTPS target → bring up Burp/mitmproxy (burp-mode skill) BEFORE driving the browser/curl, so real app traffic is captured. You don't ask; you start it. Reuse one proxy for the whole session. For API-only targets, still capture via proxy or export requests as curl/perl for evidence.
+
 ## 2. Map (hidden surface, AFTER the scan)
 `ffuf`/`gobuster` (→ `gobuster_parse`), vhosts (`ffuf -H Host:FUZZ`), params (`arjun`), auth endpoints (login/register/reset/OAuth), API routes. Review client-side JS for endpoints/secrets.
 
