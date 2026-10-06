@@ -127,7 +127,7 @@ html_doc = f"""<!DOCTYPE html>
   <div class="tag">AI penetration-testing partner · recon to report</div>
   <div class="sub">One command: <b>hunter</b>. Terminal-native agent for pentesters, OSCP/CPENT
   students, CTF players and bug-bounty hunters. Runs free &amp; unlimited on OpenCode's Zen
-  models, loads 31 method skills, explains every step (mentor mode), verifies its own findings,
+  models, loads 34 method skills, explains every step (mentor mode), verifies its own findings,
   writes the report. One folder. No mess. No API keys.</div>
   <a class="cta" href="#toc">Read the guide ↓</a>
 </div>
@@ -164,7 +164,7 @@ expert playbooks are only pulled into context when a service or phase matches.</
 <tr><th>Feature</th><th>What it does for you</th></tr>
 <tr><td><span class="badge b-acc">Mentor mode</span></td><td>Explains every tool run, interprets output in plain language, teaches the "why", always proposes the next step.</td></tr>
 <tr><td><span class="badge b-cyn">Verify-before-trust</span></td><td>The critic re-tests every suspected finding (reproduce → cross-check → benign control) before it can be confirmed or reach the report.</td></tr>
-<tr><td><span class="badge b-grn">31 skill packs</span></td><td>9 authored methodology packs + 22 service/web/phase playbooks, all loaded on demand.</td></tr>
+<tr><td><span class="badge b-grn">34 skill packs</span></td><td>12 authored methodology packs + 22 service/web/phase playbooks, all loaded on demand.</td></tr>
 <tr><td><span class="badge b-pur">No-refusal</span></td><td>Authorized scanning/recon of your own networks and labs is never refused or lectured about — by explicit policy and a permissive brain.</td></tr>
 <tr><td><span class="badge b-red">Free &amp; unlimited</span></td><td>Runs on OpenCode Zen free models. No API keys, no accounts, no per-minute quota walls that force you to stop mid-task.</td></tr>
 <tr><td><span class="badge b-cyn">One command</span></td><td><kbd>hunter</kbd> from any folder after a single install. That's the whole product interface.</td></tr>
@@ -174,7 +174,7 @@ expert playbooks are only pulled into context when a service or phase matches.</
 <figure class="term"><pre>huntbuddy/
  ├─ opencode.jsonc    the Huntbuddy config (brain, agents, permissions, skills)
  ├─ HUNTBUDDY.md      brand + operator rules loaded into every session
- ├─ skills/           9 authored methodology packs (mentor, oscp, cpent, research, ...)
+ ├─ skills/           12 authored methodology packs (mentor, oscp, cpent, research, ...)
  ├─ playbooks/        22 service/web/phase playbooks (SMB, AD, SQLi, SSRF, K8s, ...)
  ├─ tools/helpers/    hb-state.sh (state machine) · hb-scope.sh · hb-report.sh · hb-engage.sh
  ├─ config/           free-models.md (model rotation playbook)
@@ -188,7 +188,7 @@ expert playbooks are only pulled into context when a service or phase matches.</
 <li><b>Install the engine once</b> (official, system-wide): <kbd>curl -fsSL https://opencode.ai/install | bash</kbd></li>
 <li><b>Get the Huntbuddy folder</b> into place: from a published bundle, <kbd>bash huntbuddy-install.sh</kbd>, or a git clone of this repo.</li>
 <li><b>Done.</b> No API keys, no accounts, no login — the brain is OpenCode Zen free and connects automatically.</li>
-<li><b>Check it</b>: <kbd>hunter --version</kbd> → engine version · <kbd>hunter skills</kbd> → 31 packs · <kbd>hunter debug config</kbd> → resolved brain and agents.</li>
+<li><b>Check it</b>: <kbd>hunter --version</kbd> → engine version · <kbd>hunter skills</kbd> → 34 packs · <kbd>hunter debug config</kbd> → resolved brain and agents.</li>
 <li><b>Test it</b>: <kbd>hunter</kbd>, then <kbd>ifconfig</kbd> — it runs your tools and sums them up.</li>
 </ol>
 
@@ -231,9 +231,9 @@ run simultaneously on the free relay.</div>
 {term("nemotron-run.txt", "Real + live: the default brain executed ifconfig and was rolling the nmap sweep — no refusals, unlimited.")}
 
 <h1>10 · The skill packs</h1>
-<div class="imgwrap"><img src="img/skillmap.png" alt="skills"><div class="figcap">Figure 3 — 31 packs: 9 authored + 22 playbooks, loaded on demand.</div></div>
-{term("skills-list.txt", "The actual 31 packs, straight from disk. Skills are plain markdown — add yours with a folder.")}
-<h3>Getting the most out of the 9 authored packs</h3>
+<div class="imgwrap"><img src="img/skillmap.png" alt="skills"><div class="figcap">Figure 3 — 34 packs: 12 authored + 22 playbooks, loaded on demand.</div></div>
+{term("skills-list.txt", "The actual 34 packs, straight from disk. Skills are plain markdown — add yours with a folder.")}
+<h3>Getting the most out of the 12 authored packs</h3>
 <ul class="steps">
 <li><b>mentor-guidance</b> — on by default; type <kbd>/guide</kbd> to force it. Every reply ends with a concrete <i>Next:</i>.</li>
 <li><b>oscp-methodology</b> — prompt: <i>"pentest &lt;box&gt;, goal is root. Follow the OSCP methodology."</i></li>

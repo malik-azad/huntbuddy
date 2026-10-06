@@ -161,7 +161,7 @@ world is remembered in `engagements/.active`.
 | **critic** | False-positive officer — re-tests every suspected finding adversarially |
 | **reporter** | Consultant-style report writer → `engagements/<name>/findings.md` |
 
-## Skills & playbooks (31 packs)
+## Skills & playbooks (34 packs)
 
 Skills are plain-markdown folders; each loads on demand, so context is only
 spent when relevant. Adding one is a folder with a `SKILL.md` — no code.
@@ -264,7 +264,7 @@ huntbuddy/
   bootstrap.sh      one-command setup (clone + engine + hunter)
   opencode.jsonc    brain, agents, permissions, skills config
   HUNTBUDDY.md      brand & operator rules for every session
-  skills/           9 authored methodology packs
+  skills/           12 authored methodology packs
   playbooks/        22 service/web/phase playbooks
   tools/            hunter wrapper + state machine (hb-state.sh), scope guard, reports
   config/           model rotation notes

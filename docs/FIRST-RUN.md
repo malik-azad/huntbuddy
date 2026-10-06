@@ -22,7 +22,7 @@ curl -fsSL https://opencode.ai/install | bash
 ```bash
 hunter --version      # 1.18.31
 hunter --help          # the command reference
-hunter skills          # should show 31 skill packs (9 authored + playbooks)
+hunter skills          # should show 34 skill packs (12 authored + playbooks)
 ```
 
 ## Step 2 · First live chat (the basics test)
