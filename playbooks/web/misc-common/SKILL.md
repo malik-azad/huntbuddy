@@ -1,6 +1,6 @@
 ---
 name: web-misc-common
-description: High-value web vuln classes WITHOUT dedicated deep packs — auto-load ANY web engagement to test + know under: CSRF, open redirect, CORS misconfig, host-header injection, HTTP request smuggling, cache poisoning, business-logic/race conditions, weak crypto (JWT/TLS/random), clickjacking, security-header gaps, mass-assignment, subdomain takeovers, HTTP verb tampering. Triggers - any web target (router loads this alongside the class-specific skill), "check CSRF", "test redirect", "CORS", "host header", "smuggling", "cache", "race condition", "business logic", "JWT", "clickjacking", headers, takeover, "what else to test".
+description: High-value web vuln classes WITHOUT dedicated deep packs — auto-load ANY web engagement to test + know under: CSRF, open redirect, CORS misconfig, host-header injection, HTTP request smuggling, cache poisoning, business-logic/race conditions, weak crypto (JWT/TLS/random), clickjacking, security-header gaps, mass-assignment, subdomain takeovers, HTTP verb tampering, GraphQL (introspection/IDOR/batching/mutations), WebSockets (authz/origin/channel). Triggers - any web target (router loads this alongside the class-specific skill), "check CSRF", "test redirect", "CORS", "host header", "smuggling", "cache", "race condition", "business logic", "JWT", "clickjacking", headers, takeover, graphql, /graphql, websocket, ws://, "what else to test".
 tags: [vuln_assess, exploitation]
 ---
 
@@ -64,6 +64,24 @@ Check: `subjack`/`nuclei -tags takeover`; register proof → serve EICAR/flag �
 
 ## Proof discipline
 Every class above earns `confirmed` ONLY with a concrete artifact (cross-origin state change, forged token accepted, poisoned cached page, second acceptance, persisted field, framed page, takeover page). No influence-only = `low`/informational, never confirmed. Others auto-mapped to `REPORTING` with the engagement find artifact.
+
+## 13. GraphQL (modern APIs — high value)
+Signal: `/graphql`, `graphql` route, `__typename` echoes in responses.
+- Introspect first: `{__schema{types{name fields{name args{name type{name}}}}}}` → dump types/mutations. Deep-scan exposed objects.
+- **IDOR via nested/alias queries**: `{user(id:1){email} a:user(id:2){email}}` — batch field aliases prove cross-user read in one request.
+- **Batching to bypass rate-limit/bruteforce**: `mutation{{login(user:"u",pass:"a"){token} ... }}` many aliases → token spray in one HTTP call.
+- **Mutation abuse**: enable-payment/role-change/credit-move mutation reachable without authz.
+- **Error leak & `null` vs error**: introspection on/off; error messages enum/trace. Over-fetch redacted field (`password`/`secret` nulled vs absent) = leak signal.
+- **Potential attacks**: depth/alias DoS, batch smash, fragment bombs — report as resource-exhaustion if it provably multiplies load.
+Proof: cross-user object read, brute-forced login oracle, unauthorized mutation effect, redacted-field leak.
+
+## 14. WebSockets (real-time apps)
+Signal: `ws://`/`wss://` endpoints (`/ws`, `/socket.io`, `/realtime`), Socket.IO, SignalR, raw WSS in JS.
+- **Authz**: is the WS handshake authenticated? Same-origin check on the `Origin` header (CSR-WS: no origin = cross-site connection → full hijack). Credentials in the URL/query vs header.
+- **Message injection**: subscribe to a channel you shouldn't (admin/ops/user-1v1); send a message as another user (`sender`/`from` field) → impersonation.
+- **IDOR over WS**: object-id messages with no per-message check (read someone else's realtime feed/orders).
+- **Replay/plaintext**: WS over plain ws:// carrying tokens/session data; no heartbeat/encryption = note.
+Proof: joined an unauthorized channel live, or a sent-message delivered as another user with the receiver screenshot.
 
 ## Interaction with deep skills
 If the router maps the surface to a deeper web-<class> skill (sqli/ssrf/xss/cmd/ssti/xxe/lfi/upload/deserialization/idor), run THAT first/pivot, then come back here for the misc sweep. This pack covers what the deep packs don't.

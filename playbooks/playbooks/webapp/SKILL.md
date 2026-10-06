@@ -31,7 +31,7 @@ Fingerprint stack+version (whatweb/httpx, headers), CMS (wpscan/etc.), APIs (/sw
 | param/header feeds a shell (ping/submit/convert/download/filename) | **web-cmd-injection** |
 | known framework+version CVE | shared exploitation methodology + searchsploit/nuclei |
 
-**After** the deep class, run the misc sweep for the classes without a deep pack (ANY web engagement): `web-misc-common` — CSRF, JWT/crypto, open redirect, CORS, host-header, request smuggling, cache poisoning, business-logic/race, mass-assignment, clickjacking, header gaps, subdomain takeover, HTTP verb tampering.
+**After** the deep class, run the misc sweep for the classes without a deep pack (ANY web engagement): `web-misc-common` — CSRF, JWT/crypto, open redirect, CORS, host-header, request smuggling, cache poisoning, business-logic/race, mass-assignment, clickjacking, header gaps, subdomain takeover, HTTP verb tampering, **GraphQL** (/graphql, introspection, alias-batching IDOR, mutation abuse) and **WebSockets** (origin/authz, channel IDOR).
 
 ## 4. PROVE + Report
 A finding is `suspected` until you reproduce concrete impact (dumped canary row / `id` / file bytes / cloud creds / cross-user data) — then `add_vuln` `confirmed` with the evidence. Never mark a host resolved/"safe" without a completed active scan. Report: reproduction steps + request/response evidence + CVSS + OWASP-WSTG mapping.
